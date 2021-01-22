@@ -2090,7 +2090,6 @@ CMakeFiles/rdecay02.dir/src/HistoManager.cc.o
  /home/deepmind/mont/geant4-install/include/Geant4/tools/wroot/wbuf
  /home/deepmind/mont/worktree/realspectrum/src/HistoManager.cc
 CMakeFiles/rdecay02.dir/src/PhysicsList.cc.o
- ../include/EmStandardPhysics.hh
  ../include/GammaPhysics.hh
  ../include/PhysicsList.hh
  /home/deepmind/mont/geant4-install/include/Geant4/CLHEP/Random/DualRand.h
@@ -2234,6 +2233,7 @@ CMakeFiles/rdecay02.dir/src/PhysicsList.cc.o
  /home/deepmind/mont/geant4-install/include/Geant4/G4Element.hh
  /home/deepmind/mont/geant4-install/include/Geant4/G4ElementTable.hh
  /home/deepmind/mont/geant4-install/include/Geant4/G4ElementVector.hh
+ /home/deepmind/mont/geant4-install/include/Geant4/G4EmStandardPhysics.hh
  /home/deepmind/mont/geant4-install/include/Geant4/G4EnergyRangeManager.hh
  /home/deepmind/mont/geant4-install/include/Geant4/G4EnvironmentUtils.hh
  /home/deepmind/mont/geant4-install/include/Geant4/G4Eta.hh

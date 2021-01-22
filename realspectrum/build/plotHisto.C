@@ -1,54 +1,43 @@
+// ROOT macro file for plotting example B4 histograms 
+// 
+// Can be run from ROOT session:
+// root[0] .x plotHisto.C
+
 {
-  
- TFile*  inputFile = TFile::Open("mytotalspecsubbackuniform.root");
- //TFile*  inputFile = TFile::Open("myoutbackgroundsec.root");
- TH1F *hh[4];
- hh[0]=new TH1F();
- hh[0]=(TH1F *)inputFile->Get("Na22-TC");
- hh[1]=new TH1F();
- hh[1]=(TH1F *)inputFile->Get("Cs137-TC");
-
- hh[2]=new TH1F();
- //hh[0]->Add(hh[1],-1);
-double sum511=0;
-for(int ch1=400;ch1<550;ch1++){	sum511=sum511+hh[0]->GetBinContent(ch1);		}
-double sum1274=0;
-for(int ch1=1100;ch1<1200;ch1++){	sum1274=sum1274+hh[0]->GetBinContent(ch1);		}
-cout<<"sum1274/sum511= "<<sum1274/sum511<<endl;
-
- TCanvas*myc=new TCanvas("myc","myc",1200,400);
- myc->Divide(1,2);
- myc->cd(1);hh[0]->Draw();
- myc->cd(2);hh[1]->Draw();
-/*
-gROOT->Reset();
+  gROOT->Reset();
+  gROOT->SetStyle("Plain");
   
   // Draw histos filled by Geant4 simulation 
   //   
-  TFile f = TFile("rdecay02.root");
-  TCanvas* c1 = new TCanvas("c1", "  ");
+
+  // Open file filled by Geant4 simulation 
+  TFile f("Co60.root");
+
+  // Create a canvas and divide it into 2x2 pads
+  TCanvas* c1 = new TCanvas("c1", "", 20, 20, 1000, 1000);
+  c1->Divide(2,2);
   
-  c1->SetLogy(0);
-  c1->cd();
-  c1->Update();
+  // Draw Eabs histogram in the pad 1
+  c1->cd(1);
+  TH1D* hist1 = (TH1D*)f.Get("Eabs");
+  hist1->Draw("HIST");
   
-  ///TH1D* hist1 = (TH1D*)f.Get("H11");
-  ///hist1->SetLineColor(kRed); 
-  ///hist1->Draw("HIST");
+  // Draw Labs histogram in the pad 2
+  c1->cd(2);
+  TH1D* hist2 = (TH1D*)f.Get("Labs");
+  hist2->Draw("HIST");
   
-  ///TH1D* hist2 = (TH1D*)f.Get("H12");
-  ///hist2->Draw("HIST");
-     
-  ///TH1D* hist3 = (TH1D*)f.Get("H13");
-  ///hist3->SetLineColor(kRed);   
-  ///hist3->Draw("HIST");
+  // Draw Egap histogram in the pad 3
+  // with logaritmic scale for y
+  TH1D* hist3 = (TH1D*)f.Get("Egap");
+  c1->cd(3);
+  gPad->SetLogy(1);
+  hist3->Draw("HIST");
   
-  ///TH1D* hist4 = (TH1D*)f.Get("H14");
-  ///hist4->Draw("HIST");
-  
-  ///TH1D* hist5 = (TH1D*)f.Get("H15");
-  ///hist5->Draw("HIST");
-  
-  TH1D* hist6 = (TH1D*)f.Get("H16");
-  hist6->Draw("HIST");        */
+  // Draw Lgap histogram in the pad 4
+  // with logaritmic scale for y
+  c1->cd(4);
+  gPad->SetLogy(1);
+  TH1D* hist4 = (TH1D*)f.Get("Lgap");
+  hist4->Draw("HIST");
 }  

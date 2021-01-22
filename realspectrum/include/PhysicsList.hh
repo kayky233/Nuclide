@@ -23,31 +23,32 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file hadronic/Hadr03/include/PhysicsList.hh
-/// \brief Definition of the PhysicsList class
 //
-// $Id: PhysicsList.hh 66587 2012-12-21 11:06:44Z ihrivnac $
-//
+/// \file B3PhysicsList.hh
+/// \brief Definition of the B3PhysicsList class
 
-#ifndef PhysicsList_h
-#define PhysicsList_h 1
+#ifndef B3PhysicsList_h
+#define B3PhysicsList_h 1
 
 #include "G4VModularPhysicsList.hh"
-#include "globals.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+/// Modular physics list
+///
+/// It includes the folowing physics builders
+/// - G4DecayPhysics
+/// - G4RadioactiveDecayPhysics
+/// - G4EmStandardPhysics
 
 class PhysicsList: public G4VModularPhysicsList
 {
 public:
   PhysicsList();
- ~PhysicsList();
+  virtual ~PhysicsList();
 
-public:
-  virtual void ConstructParticle();
   virtual void SetCuts();
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
+

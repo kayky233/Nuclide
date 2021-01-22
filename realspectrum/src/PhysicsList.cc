@@ -1,3 +1,4 @@
+
 //
 // ********************************************************************
 // * License and Disclaimer                                           *
@@ -23,22 +24,22 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file hadronic/Hadr03/src/PhysicsList.cc
-/// \brief Implementation of the PhysicsList class
 //
-// $Id: PhysicsList.cc 70268 2013-05-28 14:17:50Z maire $
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+/// \file B3PhysicsList.cc
+/// \brief Implementation of the B3PhysicsList class
 
 #include "PhysicsList.hh"
+
+#include "G4DecayPhysics.hh"
+#include "G4EmStandardPhysics.hh"
+#include "G4RadioactiveDecayPhysics.hh"
+
 
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
 
 
-#include "EmStandardPhysics.hh"
-#include "G4DecayPhysics.hh"
-#include "G4RadioactiveDecayPhysics.hh"
+
 
 #include "G4HadronElasticPhysicsHP.hh"
 #include "G4HadronPhysicsFTFP_BERT_HP.hh"
@@ -51,102 +52,58 @@
 #include "GammaPhysics.hh"
 
 // particles
-
-#include "G4BosonConstructor.hh"
-#include "G4LeptonConstructor.hh"
-#include "G4MesonConstructor.hh"
-#include "G4BosonConstructor.hh"
-#include "G4BaryonConstructor.hh"
-#include "G4IonConstructor.hh"
-#include "G4ShortLivedConstructor.hh"
-
+//
+ #include "G4BosonConstructor.hh"
+ #include "G4LeptonConstructor.hh"
+ #include "G4MesonConstructor.hh"
+ #include "G4BosonConstructor.hh"
+ #include "G4BaryonConstructor.hh"
+ #include "G4IonConstructor.hh"
+ #include "G4ShortLivedConstructor.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PhysicsList::PhysicsList()
-:G4VModularPhysicsList()
-{
-  G4int verb = 1;
-  SetVerboseLevel(verb);
-  
-  //add new units for radioActive decays
-  //
-  new G4UnitDefinition( "millielectronVolt", "meV", "Energy", 1.e-3*eV);   
-  // 
-  const G4double minute = 60*second;
-  const G4double hour   = 60*minute;
-  const G4double day    = 24*hour;
-  const G4double year   = 365*day;
-  new G4UnitDefinition("minute", "min", "Time", minute);
-  new G4UnitDefinition("hour",   "h",   "Time", hour);
-  new G4UnitDefinition("day",    "d",   "Time", day);
-  new G4UnitDefinition("year",   "y",   "Time", year);
-          
-  // EM physics
-  RegisterPhysics(new EmStandardPhysics());
-  
-  // Decay
+PhysicsList::PhysicsList() 
+: G4VModularPhysicsList(){
+  SetVerboseLevel(1);
+//add new units for radioActive decays
+//  //
+  /*
+    new G4UnitDefinition( "millielectronVolt", "meV", "Energy", 1.e-3*eV);   
+//      // 
+    const G4double minute = 60*second;
+    const G4double hour   = 60*minute;
+    const G4double day    = 24*hour;
+    const G4double year   = 365*day;
+    new G4UnitDefinition("minute", "min", "Time", minute);
+    new G4UnitDefinition("hour",   "h",   "Time", hour);
+    new G4UnitDefinition("day",    "d",   "Time", day);
+    new G4UnitDefinition("year",   "y",   "Time", year);
+ */
+  // Default physics
   RegisterPhysics(new G4DecayPhysics());
+
+  // EM physics
+  RegisterPhysics(new G4EmStandardPhysics());
 
   // Radioactive decay
   RegisterPhysics(new G4RadioactiveDecayPhysics());
-            
-  // Hadron Elastic scattering
-//RegisterPhysics( new G4HadronElasticPhysicsHP(verb) );
-  
-  // Hadron Inelastic physics
-//RegisterPhysics( new G4HadronPhysicsFTFP_BERT_HP(verb));
-//  RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
-  RegisterPhysics( new G4HadronInelasticQBBC(verb));        
-  RegisterPhysics( new G4HadronPhysicsINCLXX(verb));
-  
-  // Ion Elastic scattering
-  RegisterPhysics( new G4IonElasticPhysics(verb));
-      
-  // Ion Inelastic physics
-  RegisterPhysics( new G4IonPhysics(verb));
-  //修改以注销IonINCLXX的注册
-//  RegisterPhysics( new G4IonINCLXXPhysics(verb));
-    
-  // Gamma-Nuclear Physics
-  RegisterPhysics( new GammaPhysics("gamma"));
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PhysicsList::~PhysicsList()
-{ }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void PhysicsList::ConstructParticle()
-{
-  G4BosonConstructor  pBosonConstructor;
-  pBosonConstructor.ConstructParticle();
-
-  G4LeptonConstructor pLeptonConstructor;
-  pLeptonConstructor.ConstructParticle();
-
-  G4MesonConstructor pMesonConstructor;
-  pMesonConstructor.ConstructParticle();
-
-  G4BaryonConstructor pBaryonConstructor;
-  pBaryonConstructor.ConstructParticle();
-
-  G4IonConstructor pIonConstructor;
-  pIonConstructor.ConstructParticle();
-
-  G4ShortLivedConstructor pShortLivedConstructor;
-  pShortLivedConstructor.ConstructParticle();  
+{ 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void PhysicsList::SetCuts()
 {
-//  SetCutValue(0*mm, "proton");
-//  SetCutValue(10*um, "e-");
-//  SetCutValue(10*km, "e+");
-//  SetCutValue(10*km, "gamma");      
-}
+  G4VUserPhysicsList::SetCuts();
+}  
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+
+
+

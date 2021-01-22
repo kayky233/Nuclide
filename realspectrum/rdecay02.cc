@@ -95,9 +95,10 @@ G4cout<<seed<<"______________"<<G4endl;
   DetectorConstruction* det= new DetectorConstruction;
   runManager->SetUserInitialization(det);
   // 先不做物理定义
- // PhysicsList* phys = new PhysicsList;
+ //  PhysicsList* phys = new PhysicsList;
   // 自己定义physiclist
   auto phys = new FTFP_BERT;
+  //G4VModularPhysicsList* phys=factory.GetReferencePhysList(“”);
   runManager->SetUserInitialization(phys);
   
   runManager->SetUserInitialization(new ActionInitialization(det));    
@@ -109,6 +110,7 @@ G4cout<<seed<<"______________"<<G4endl;
   visManager->Initialize();
 #endif
 
+
   // get the pointer to the User Interface manager 
     G4UImanager* UI = G4UImanager::GetUIpointer();  
 
@@ -117,16 +119,17 @@ G4cout<<seed<<"______________"<<G4endl;
     G4String command = "/control/execute ";
     G4String fileName = argv[1];
     UI->ApplyCommand(command+fileName);
+	G4cout<<"complete!"<<G4endl;
   }
   else {
 #ifdef G4UI_USE
 #ifdef G4VIS_USE
     UI->ApplyCommand("/control/execute init_vis.mac"); 
 #else
-    UI->ApplyCommand("/control/execute init.mac"); 
+   // UI->ApplyCommand("/control/execute init.mac"); 
 #endif
-    if (ui->IsGUI()) {
-         UI->ApplyCommand("/control/execute gui.mac");
+    //if (ui->IsGUI()) {
+  //       UI->ApplyCommand("/control/execute gui.mac");
     }     
     // start interactive session
     ui->SessionStart();
@@ -135,7 +138,8 @@ G4cout<<seed<<"______________"<<G4endl;
 #endif
   }
 //
-  if (argc!=1)   // batch mode  
+//
+/*  if (argc!=1)   // batch mode  
     {
      G4String command = "/control/execute ";
      //G4String fileName = argv[1];
@@ -154,19 +158,19 @@ G4cout<<seed<<"______________"<<G4endl;
      
 #ifdef G4UI_USE
      G4UIExecutive * ui = new G4UIExecutive(argc,argv);      
-     ui->SessionStart();
+     ui->SessionStart()i;
      delete ui;
 #endif
-//          
+//
+*/          
 #ifdef G4VIS_USE 
      delete visManager;
 #endif     
-	}
   // job termination 
   //
-delete runManager;
+   delete runManager;
 
-  return 0;
+  // return 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
